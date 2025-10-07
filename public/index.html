@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAHL XMD Dark - QR Panel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔮 RAHL XMD DARK</h1>
+            <p class="subtitle">QR Code Authentication Panel</p>
+            <p class="prefix-info">Command Prefix: <span class="prefix">.</span></p>
+        </header>
+        
+        <div class="panel">
+            <div id="statusPanel" class="status awaiting-ritual">
+                <div class="status-icon">⚫</div>
+                <div class="status-text">Awaiting Ritual</div>
+                <div class="status-message">The dark entity slumbers...</div>
+            </div>
+            
+            <div id="qrContainer" class="qr-container hidden">
+                <h3>📱 Dark Sigil</h3>
+                <p>Scan with WhatsApp to bind the entity</p>
+                <img id="qrImage" src="" alt="QR Code">
+                <div class="instructions">
+                    <p>1. Open WhatsApp → Settings</p>
+                    <p>2. Linked Devices → Link a Device</p>
+                    <p>3. Scan this QR code</p>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button id="startBtn" onclick="startBot()">🔮 Begin Summoning</button>
+                <button id="refreshBtn" onclick="location.reload()">🔄 Refresh</button>
+            </div>
+            
+            <div class="command-list">
+                <h3>👁️ Available Commands</h3>
+                <div class="commands">
+                    <code>.help</code> - Show commands<br>
+                    <code>.summon</code> - Entity info<br>
+                    <code>.curse</code> - Cast curse<br>
+                    <code>.prophecy</code> - Dark prophecy<br>
+                    <code>.souls</code> - Bound souls<br>
+                    <code>.ritual</code> - Perform ritual<br>
+                    <code>.status</code> - System status<br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let checkInterval;
+        
+        function startBot() {
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('startBtn').textContent = 'Summoning...';
+            fetch('/start').then(() => checkStatus());
+        }
+        
+        function checkStatus() {
+            if (checkInterval) clearInterval(checkInterval);
+            
+            checkInterval = setInterval(async () => {
+                try {
+                    const response = await fetch('/status');
+                    const data = await response.json();
+                    
+                    updateStatus(data.status, data.qr);
+                    
+                    if (data.status === 'connected') {
+                        clearInterval(checkInterval);
+                    }
+                } catch (error) {
+                    console.error('Status check failed:', error);
+                }
+            }, 2000);
+        }
+        
+        function updateStatus(status, qr) {
+            const statusPanel = document.getElementById('statusPanel');
+            const qrContainer = document.getElementById('qrContainer');
+            const qrImage = document.getElementById('qrImage');
+            const startBtn = document.getElementById('startBtn');
+            
+            // Update status panel
+            statusPanel.className = `status ${status}`;
+            
+            // Update status text
+            const statusMap = {
+                'awaiting_ritual': ['⚫', 'Awaiting Ritual', 'The dark entity slumbers...'],
+                'summoning': ['🔮', 'Summoning...', 'Beginning dark ritual...'],
+                'awaiting_qr': ['📱', 'Awaiting QR Scan', 'Scan the dark sigil with WhatsApp...'],
+                'connected': ['✅', 'Entity Bound', 'Dark entity is active! Use .help for commands']
+            };
+            
+            const [icon, text, message] = statusMap[status] || ['❓', status, ''];
+            statusPanel.querySelector('.status-icon').textContent = icon;
+            statusPanel.querySelector('.status-text').textContent = text;
+            statusPanel.querySelector('.status-message').textContent = message;
+            
+            // Handle QR code
+            if (qr) {
+                qrImage.src = qr;
+                qrContainer.classList.remove('hidden');
+            } else {
+                qrContainer.classList.add('hidden');
+            }
+            
+            // Update button
+            if (status === 'connected') {
+                startBtn.textContent = '✅ Connected';
+                startBtn.disabled = true;
+            }
+        }
+        
+        // Start checking status on page load
+        checkStatus();
+    </script>
+</body>
+</html>
