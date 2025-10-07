@@ -1,0 +1,195 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #8B0000;
+    padding-bottom: 20px;
+}
+
+header h1 {
+    font-size: 2.5em;
+    color: #8B0000;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #ccc;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.prefix-info {
+    color: #8B0000;
+    font-size: 1.1em;
+}
+
+.prefix {
+    background: #8B0000;
+    color: #000;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.panel {
+    background: #111;
+    border: 2px solid #8B0000;
+    border-radius: 10px;
+    padding: 30px;
+}
+
+.status {
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.status.awaiting-ritual {
+    background: #222;
+    border: 1px solid #444;
+}
+
+.status.summoning {
+    background: #332100;
+    border: 1px solid #D4AF37;
+    animation: pulse 2s infinite;
+}
+
+.status.awaiting_qr {
+    background: #002200;
+    border: 1px solid #008000;
+}
+
+.status.connected {
+    background: #002200;
+    border: 1px solid #008000;
+}
+
+.status-icon {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.status-text {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+    color: #8B0000;
+}
+
+.status-message {
+    color: #ccc;
+}
+
+.qr-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.qr-container.hidden {
+    display: none;
+}
+
+.qr-container h3 {
+    color: #8B0000;
+    margin-bottom: 10px;
+}
+
+#qrImage {
+    max-width: 300px;
+    border: 2px solid #8B0000;
+    border-radius: 5px;
+    margin: 15px 0;
+}
+
+.instructions {
+    background: #222;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 15px;
+    text-align: left;
+}
+
+.instructions p {
+    margin: 5px 0;
+}
+
+.controls {
+    text-align: center;
+    margin: 20px 0;
+}
+
+button {
+    background: #8B0000;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: background 0.3s;
+}
+
+button:hover:not(:disabled) {
+    background: #A00000;
+}
+
+button:disabled {
+    background: #444;
+    cursor: not-allowed;
+}
+
+.command-list {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+}
+
+.command-list h3 {
+    color: #8B0000;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.commands {
+    background: #222;
+    padding: 20px;
+    border-radius: 5px;
+    font-family: monospace;
+}
+
+code {
+    background: #000;
+    color: #8B0000;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.hidden {
+    display: none;
+}
